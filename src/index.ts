@@ -6,11 +6,19 @@ import express from "express";
 import http from "http";
 import mongoose from "mongoose";
 import router from "./router";
+import dotenv from "dotenv";
+import path from "path";
+
+const envPath = path.resolve(__dirname, "../.env");
+
+dotenv.config({ path: envPath });
+
+const port = process.env.PORT || 3030;
+const mongodbUri =
+  process.env.MONGODB_URI || "mongodb://localhost:27017/mydatabase";
 
 const app = express();
 const server = http.createServer(app);
-const mongodb_uri =
-  "mongodb+srv://RomulanXY:Olly123@rest-api-cluster.e54nusn.mongodb.net/?retryWrites=true&w=majority";
 
 app.use(
   cors({
@@ -23,14 +31,24 @@ app.use(cookieParser());
 
 app.use("/", router());
 
-mongoose.Promise = Promise;
-mongoose.connect(mongodb_uri);
-mongoose.connection.on("connection", (stream) => {
-  console.log(stream);
+mongoose.Promise = global.Promise;
+mongoose.connect(mongodbUri);
+
+const db = mongoose.connection;
+
+db.once("open", () => {
   console.log("App is successfully connected to MongoDB!");
 });
-mongoose.connection.on("error", (error: Error) => console.log(error.message));
 
-server.listen(4000, () => {
-  console.log(`server is running on PORT: 4000`);
+db.on("error", (error) => {
+  console.error("MongoDB Connection Error:");
+  console.error(error);
+});
+
+db.on("disconnected", () => {
+  console.log("MongoDB disconnected.");
+});
+
+server.listen(port, () => {
+  console.log(`server is running on PORT: ${port}`);
 });

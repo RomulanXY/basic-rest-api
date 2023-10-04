@@ -5,7 +5,12 @@
     "baseUrl": "src",
     "outDir": "dist",
     "sourceMap": true,
-    "noImplicitAny": true
+    "noImplicitAny": true,
+    "types": ["webpack-env", "jest"],
+    "paths": {
+      "@/*": ["src/*"]
+    }
   },
-  "include": ["src/**/*"]
+  "include": ["src/**/*.ts", "tests/**/*.ts"],
+  "exclude": ["node_modules"]
 }

@@ -32,5 +32,5 @@ mongoose.connection.on("connection", (stream) => {
 mongoose.connection.on("error", (error: Error) => console.log(error.message));
 
 server.listen(4000, () => {
-  console.log(`server running on PORT: 4000`);
+  console.log(`server is running on PORT: 4000`);
 });

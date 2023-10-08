@@ -52,7 +52,7 @@ export const login = async (req: express.Request, res: express.Response) => {
       path: "/",
     });
 
-    return res.sendStatus(200).json(user).end();
+    return res.status(200).json(user);
   } catch (error) {
     console.log(error);
     return res.sendStatus(400);

@@ -34,7 +34,7 @@ export const login = async (req: express.Request, res: express.Response) => {
     const user = await geUserByEmail(email).select(
       "+authentication.salt +authentication.password"
     );
-    if (user) res.sendStatus(400);
+    if (!user) res.sendStatus(400);
 
     const expectedHash = authentication(user.authentication.salt, password);
     if (user.authentication.password !== expectedHash) res.sendStatus(403);

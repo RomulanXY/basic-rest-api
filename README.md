@@ -1,29 +1,76 @@
-# Basic User Authentication REST API WITH CRUD FEATURES
+# User Authentication REST API with CRUD Features
 
-This Git repository houses a fundamental RESTful API designed for user authentication and user management. Built using Node.js, Express, MongoDB, TypeScript, and Lodash, it provides essential endpoints for creating, updating, retrieving, and deleting user profiles.
+This repository contains a fundamental RESTful API for user authentication and management. Built using Node.js, Express, MongoDB, TypeScript, and Lodash, it offers essential endpoints for creating, updating, retrieving, and deleting user profiles.
+
+## Table of Contents
+- [Key Features](#key-features)
+- [Getting Started](#getting-started)
+  - [Setting Up Environment Variables](#setting-up-environment-variables)
+  - [API Routes](#api-routes)
+  - [Database Model](#database-model)
+  - [Testing with Postman](#testing-with-postman)
+  - [Running the API](#running-the-api)
+- [Important Note](#important-note)
 
 ## Key Features:
 
-- **User Authentication:** Robust user authentication mechanisms are in place to secure user data.
-- **CRUD Operations:** The API supports Create, Read, Update, and Delete operations for user profiles.
-- **Simplicity:** This repository focuses on the core functionalities of user management without unnecessary complexities.
-- **TypeScript:** The codebase is written in TypeScript, ensuring code quality and maintainability.
+- **User Authentication:** Secure user authentication mechanisms are implemented.
+- **CRUD Operations:** Supports Create, Read, Update, and Delete operations for user profiles.
+- **Simplicity:** Focuses on core functionalities without unnecessary complexity.
+- **TypeScript:** Codebase is written in TypeScript for code quality and maintainability.
 - **MongoDB:** User data is stored and managed in a MongoDB database.
-- **Lodash:** Lodash is utilized for efficient data manipulation and processing.
+- **Lodash:** Efficient data manipulation and processing using Lodash.
 
-## Get Started:
+## Getting Started:
 
-This repository serves as an ideal starting point for projects that require essential user management features. It offers a straightforward, no-frills approach to user authentication and CRUD operations, making it a reliable choice for developers seeking simplicity and efficiency in their projects.
+To use this REST API, follow these steps:
+
+### Setting Up Environment Variables:
+
+1. Create a `.env` file in the root directory.
+2. Set the following environment variables with your values (replace with actual values for production):
+
+PORT=
+MONGODB_URI=""
+SECRET=""
+
+
+For setting up the `MONGODB_URI` variable, you can follow the MongoDB documentation on creating a cluster and obtaining the connection URI [here](https://docs.mongodb.com/guides/cloud/connectionstring/).
+
+### API Routes:
+
+- `POST /auth/register`: User registration.
+- `POST /auth/login`: User login.
+- `GET /users` (protected): Retrieve all users.
+- `DELETE /users/:id` (protected): Delete a user by ID.
+- `PATCH /users/:id` (protected): Update a user by ID.
+
+### Database Model:
+
+- User model includes fields for `username`, `email`, and an `authentication` object containing `password`, `salt`, and `sessionToken`.
+- This model is used for CRUD operations on user data.
+
+### Testing with Postman:
+
+You can use Postman or any other frontend helper to test the API. Here's how to structure payloads for key endpoints:
+
+- **User Registration** (POST `/auth/register`): JSON payload with `username`, `email`, and `authentication.password`.
+- **User Login** (POST `/auth/login`): JSON payload with `email` and `authentication.password`.
+- **Get All Users** (GET `/users`): No payload required. Include a valid JWT in the `Authorization` header.
+- **Delete User** (DELETE `/users/:id`): No payload required. Include a valid JWT in the `Authorization` header.
+- **Update User** (PATCH `/users/:id`): JSON payload with the fields you want to update (e.g., `username`, `email`, or `authentication.password`). Include a valid JWT in the `Authorization` header.
+
+### Running the API:
+
+Start the API by running `npm start`.
 
 ## Important Note:
 
-While this repository provides a solid foundation for user authentication and CRUD operations, it's important to note that it is primarily intended for educational and developmental purposes. It is not recommended for production use without further enhancements and thorough security reviews.
+This repository is intended for educational and developmental purposes. It serves as a solid foundation for user authentication and CRUD operations and is ideal for kickstarting development, building prototypes, or testing projects. However, it is not recommended for production use without further enhancements:
 
-Consider this repository as an excellent starting point to kickstart your development journey and build prototypes or test projects. However, before deploying it in a production environment, it's essential to:
+- **Security:** Implement additional security measures and best practices to safeguard user data.
+- **Performance:** Optimize code and infrastructure for efficient handling of production loads.
+- **Scalability:** Evaluate the application's scalability to meet the demands of a larger user base.
+- **Testing:** Conduct comprehensive testing and quality assurance to identify and resolve potential issues.
 
-- **Enhance Security:** Implement additional security measures and best practices to ensure the safety of user data in a production setting.
-- **Performance Optimization:** Optimize the code and infrastructure to handle real-world production loads efficiently.
-- **Scalability:** Evaluate the scalability of the application to meet the demands of a larger user base.
-- **Testing and Quality Assurance:** Conduct comprehensive testing and quality assurance to identify and resolve any potential issues.
-
-In summary, while this repository offers a great starting point, it should be considered a stepping stone toward building production-ready applications. Exercise caution and diligence when transitioning from development to production environments.
+In summary, while this repository provides a valuable starting point, exercise caution and diligence when transitioning to production environments.
